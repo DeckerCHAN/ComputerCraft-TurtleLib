@@ -144,6 +144,18 @@ obstinateFullFuel=function()
 		success=turtle.getFuelLevel()==turtle.getFuelLimit()
 	end
 end
+
+isHasItem=function(itemdata)
+		for i=1,16 do
+			local data= turtle.getItemDetail(i)
+			if data==nil then
+				data=nil
+			elseif data.name==itemdata then
+				return true
+			end
+		end
+		return false
+end
 --Level 2 functions
 --------------------------------
 digForward=function( step )
@@ -175,6 +187,20 @@ digBack=function(step)
 	turnBack()
 	digForward(step)
 	turnBack()
+end
+
+digToRight=function(step)
+	step=step or 1
+	turnRight()
+	digForward(step)
+	turnLeft()
+end
+
+digToLeft=function(step)
+	step=step or 1
+	turnRight()
+	digForward(step)
+	turnLeft()
 end
 
 --Level 3 functions
@@ -218,25 +244,3 @@ digCube=function(cloumn,row,level)
 	digDown(level)
 end
 --------------------------------
-
-cloumn=5
-row=5
-level=5
-
-workingHight=0;
-for i=1,2 do
-	digUp(workingHight)
-	digCube(cloumn,row,level)
-	digDown(workingHight)
-
-	workingHight=workingHight+level+1
-
-	turnBack()
-	obstinateDropAll()
-	turnRight()
-	obstinateFullFuel()
-	turnRight()
-
-end
-
-obstinateFullFuel()
